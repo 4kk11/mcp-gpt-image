@@ -1,5 +1,8 @@
 # mcp-gpt-image
 
+[![npm version](https://badge.fury.io/js/mcp-gpt-image.svg)](https://www.npmjs.com/package/mcp-gpt-image)
+[![Docker Image](https://img.shields.io/docker/v/4kk11/mcp-gpt-image?logo=docker)](https://hub.docker.com/r/4kk11/mcp-gpt-image)
+
 OpenAI APIを使用して画像を生成・編集するためのMCPサーバーです。  
 生成された画像は指定されたディレクトリに保存され、プレビュー用に縮小された画像と合わせて返却されます。
 
