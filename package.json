@@ -1,16 +1,27 @@
 {
   "name": "mcp-gpt-image",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "description": "",
+  "keywords": [
+    "mcp",
+    "gpt",
+    "image"
+  ],
+  "author": "4kk11",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "mcp-gpt-image": "./build/index.js"
+  },
+  "scripts": {
+    "build": "tsc && chmod 755 build/index.js"
+  },
+  "files": [
+    "build"
+  ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.10.2",
+    "openai": "^4.96.0",
     "zod": "^3.24.3"
   },
   "devDependencies": {
