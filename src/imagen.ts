@@ -110,11 +110,14 @@ export const createServer = async () => {
         // 元のサイズで保存
         fs.writeFileSync(filepath, imageBuffer);
 
-        // 256x256にリサイズ
+        // 画像メタデータを取得
+        const metadata = await sharp(imageBuffer).metadata();
+        const width = metadata.width || 1024;  // デフォルト値として1024を使用
+        
+        // 2分の1サイズにリサイズ(プレビュー用)
         const resizedImageBuffer = await sharp(imageBuffer)
-          .resize(256, 256, {
-            fit: 'contain',
-            background: { r: 255, g: 255, b: 255, alpha: 0 }
+          .resize(Math.round(width / 2), undefined, {
+            fit: 'inside'
           })
           .png()
           .toBuffer();
@@ -179,11 +182,14 @@ export const createServer = async () => {
         // 元のサイズで保存
         fs.writeFileSync(filepath, imageBuffer);
 
-        // 256x256にリサイズ
+        // 画像メタデータを取得
+        const metadata = await sharp(imageBuffer).metadata();
+        const width = metadata.width || 1024;  // デフォルト値として1024を使用
+        
+        // 2分の1サイズにリサイズ（プレビュー用)
         const resizedImageBuffer = await sharp(imageBuffer)
-          .resize(256, 256, {
-            fit: 'contain',
-            background: { r: 255, g: 255, b: 255, alpha: 0 }
+          .resize(Math.round(width / 2), undefined, {
+            fit: 'inside'
           })
           .png()
           .toBuffer();
