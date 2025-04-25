@@ -1,6 +1,7 @@
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import fs from "fs";
 import path from "path";
+import sharp from "sharp";
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -103,9 +104,20 @@ export const createServer = async () => {
         const filename = `generated_${timestamp}.png`;
         const filepath = path.join(IMAGES_DIR, filename);
         
-        // Base64データをバッファに変換して保存
+        // Base64データをバッファに変換
         const imageBuffer = Buffer.from(response.data[0].b64_json, 'base64');
+        
+        // 元のサイズで保存
         fs.writeFileSync(filepath, imageBuffer);
+
+        // 256x256にリサイズ
+        const resizedImageBuffer = await sharp(imageBuffer)
+          .resize(256, 256, {
+            fit: 'contain',
+            background: { r: 255, g: 255, b: 255, alpha: 0 }
+          })
+          .png()
+          .toBuffer();
 
         return {
           content: [
@@ -114,6 +126,11 @@ export const createServer = async () => {
               text: filepath,
               mimeType: "image/png",
             },
+            {
+              type: "image",
+              data: resizedImageBuffer.toString('base64'),
+              mimeType: "image/png",
+            }
           ],
         };
       } catch (error) {
@@ -156,9 +173,20 @@ export const createServer = async () => {
         const filename = `edited_${timestamp}.png`;
         const filepath = path.join(IMAGES_DIR, filename);
         
-        // Base64データをバッファに変換して保存
-        const _imageBuffer = Buffer.from(response.data[0].b64_json, 'base64');
-        fs.writeFileSync(filepath, _imageBuffer);
+        // Base64データをバッファに変換
+        const imageBuffer = Buffer.from(response.data[0].b64_json, 'base64');
+        
+        // 元のサイズで保存
+        fs.writeFileSync(filepath, imageBuffer);
+
+        // 256x256にリサイズ
+        const resizedImageBuffer = await sharp(imageBuffer)
+          .resize(256, 256, {
+            fit: 'contain',
+            background: { r: 255, g: 255, b: 255, alpha: 0 }
+          })
+          .png()
+          .toBuffer();
 
         return {
           content: [
@@ -167,6 +195,11 @@ export const createServer = async () => {
               text: filepath,
               mimeType: "image/png",
             },
+            {
+              type: "image",
+              data: resizedImageBuffer.toString('base64'),
+              mimeType: "image/png",
+            }
           ],
         };
       } catch (error) {
