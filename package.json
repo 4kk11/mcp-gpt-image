@@ -2,6 +2,7 @@
   "name": "mcp-gpt-image",
   "version": "1.0.0",
   "description": "",
+  "main": "./build/index.js",
   "keywords": [
     "mcp",
     "gpt",
@@ -21,8 +22,6 @@
   ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.10.2",
-    "@types/pako": "^2.0.3",
-    "@types/sharp": "^0.31.1",
     "openai": "^4.96.0",
     "pako": "^2.1.0",
     "sharp": "^0.34.1",
@@ -30,6 +29,8 @@
   },
   "devDependencies": {
     "@types/node": "^22.15.2",
+    "@types/pako": "^2.0.3",
+    "@types/sharp": "^0.31.1",
     "typescript": "^5.8.3"
   }
 }
