@@ -1,5 +1,6 @@
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import fs from "fs";
+import path from "path";
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -28,6 +29,16 @@ const EditImageSchema = z.object({
   image: z.string().describe("編集する画像のbase64データまたはURL"),
   prompt: z.string().describe("編集内容を説明するテキストプロンプト"),
 });
+
+// 画像保存用のディレクトリパスを環境変数から取得
+const IMAGES_DIR = process.env.IMAGES_DIR
+  ? path.resolve(process.env.IMAGES_DIR)
+  : path.join(process.cwd(), "temp");
+
+// 保存用ディレクトリが存在しない場合は作成
+if (!fs.existsSync(IMAGES_DIR)) {
+  fs.mkdirSync(IMAGES_DIR, { recursive: true });
+}
 
 export const createServer = async () => {
   const server = new Server(
@@ -87,11 +98,20 @@ export const createServer = async () => {
           throw new McpError(500, "画像生成に失敗しました: レスポンスデータが不正です");
         }
 
+        // 一時ファイルとして保存
+        const timestamp = new Date().getTime();
+        const filename = `generated_${timestamp}.png`;
+        const filepath = path.join(IMAGES_DIR, filename);
+        
+        // Base64データをバッファに変換して保存
+        const imageBuffer = Buffer.from(response.data[0].b64_json, 'base64');
+        fs.writeFileSync(filepath, imageBuffer);
+
         return {
           content: [
             {
-              type: "image",
-              data: response.data[0].b64_json,
+              type: "text",
+              text: filepath,
               mimeType: "image/png",
             },
           ],
@@ -140,11 +160,20 @@ export const createServer = async () => {
           throw new McpError(500, "画像編集に失敗しました: レスポンスデータが不正です");
         }
 
+        // 一時ファイルとして保存
+        const timestamp = new Date().getTime();
+        const filename = `edited_${timestamp}.png`;
+        const filepath = path.join(IMAGES_DIR, filename);
+        
+        // Base64データをバッファに変換して保存
+        const _imageBuffer = Buffer.from(response.data[0].b64_json, 'base64');
+        fs.writeFileSync(filepath, _imageBuffer);
+
         return {
           content: [
             {
-              type: "image",
-              data: response.data[0].b64_json,
+              type: "text",
+              text: filepath,
               mimeType: "image/png",
             },
           ],
