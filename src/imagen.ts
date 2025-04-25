@@ -114,9 +114,9 @@ export const createServer = async () => {
         const metadata = await sharp(imageBuffer).metadata();
         const width = metadata.width || 1024;  // デフォルト値として1024を使用
         
-        // 2分の1サイズにリサイズ(プレビュー用)
+        // 4分の1サイズにリサイズ(プレビュー用)
         const resizedImageBuffer = await sharp(imageBuffer)
-          .resize(Math.round(width / 2), undefined, {
+          .resize(Math.round(width / 4), undefined, {
             fit: 'inside'
           })
           .png()
@@ -186,9 +186,9 @@ export const createServer = async () => {
         const metadata = await sharp(imageBuffer).metadata();
         const width = metadata.width || 1024;  // デフォルト値として1024を使用
         
-        // 2分の1サイズにリサイズ（プレビュー用)
+        // 4分の1サイズにリサイズ（プレビュー用)
         const resizedImageBuffer = await sharp(imageBuffer)
-          .resize(Math.round(width / 2), undefined, {
+          .resize(Math.round(width / 4), undefined, {
             fit: 'inside'
           })
           .png()
