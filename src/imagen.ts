@@ -26,7 +26,7 @@ const GenerateImageSchema = z.object({
 });
 
 const EditImageSchema = z.object({
-  image: z.string().describe("編集する画像のbase64データまたはURL"),
+  image: z.string().describe("編集する画像のファイルパス"),
   prompt: z.string().describe("編集内容を説明するテキストプロンプト"),
 });
 
@@ -129,23 +129,14 @@ export const createServer = async () => {
       const { image, prompt } = validatedArgs;
 
       try {
-        // Base64またはURLから画像データを取得
-        let imageData;
-        if (image.startsWith("http")) {
-          // URLの場合はダウンロード
-          const response = await fetch(image);
-          const buffer = await response.arrayBuffer();
-          imageData = Buffer.from(buffer).toString("base64");
-        } else {
-          // Base64の場合はそのまま使用
-          imageData = image;
+        // ファイルパスから画像を読み込む
+        if (!fs.existsSync(image)) {
+          throw new McpError(ErrorCode.InternalError, "指定された画像ファイルが存在しません");
         }
 
-        // Base64データをBufferに変換し、ReadableStreamとして扱う
-        const imageBuffer = Buffer.from(imageData, 'base64');
         const imageFile = await toFile(
-          fs.createReadStream(Buffer.from(imageBuffer)),
-          'image.png',
+          fs.createReadStream(image),
+          path.basename(image),
           { type: 'image/png' }
         );
 
