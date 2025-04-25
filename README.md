@@ -83,30 +83,33 @@ docker pull 4kk11/mcp-gpt-image
 
 ## 開発者向け
 
-### 必要なパッケージのインストール
+### Dockerイメージのビルドと管理
 
 ```bash
-npm install
+# Dockerイメージをビルド
+make docker-build
+
+# Dockerイメージを削除
+make docker-clean
 ```
 
-### ビルド
-
-```bash
-npm run build
-```
-
-開発時の設定例（claude_desktop_config.json）:
 ```json
 {
   "mcpServers": {
     "gpt-image": {
-      "command": "node",
+      "command": "docker",
       "args": [
-        "./build/index.js"
+        "run",
+        "-i",
+        "--rm",
+        "-v",
+        "YOUR_IMAGES_DIR:/app/temp",
+        "-e",
+        "OPENAI_API_KEY",
+        "mcp-gpt-image"
       ],
       "env": {
-        "OPENAI_API_KEY": "YOUR_API_KEY",
-        "IMAGES_DIR": "./temp"
+        "OPENAI_API_KEY": "YOUR_API_KEY"
       }
     }
   }

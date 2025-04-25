@@ -5,7 +5,7 @@ docker-build:
 	docker build -t mcp-gpt-image . && docker image prune -f
 
 docker-run:
-	docker run -i --rm -v ./resources:/app/resources mcp-gpt-image
+	docker run -i --rm -v ./output:/app/temp mcp-gpt-image
 
 docker-clean:
 	docker rmi mcp-gpt-image
