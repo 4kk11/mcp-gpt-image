@@ -26,6 +26,15 @@ OpenAI APIを使用して画像を生成・編集するためのMCPサーバー�
 - `image`: 編集する画像のファイルパス（必須）
 - `prompt`: 編集内容を説明するテキストプロンプト（必須）
 
+## 使用例
+### バリエーションを出力
+
+https://github.com/user-attachments/assets/c0f69b09-237f-4cc4-96cc-f528d36b1fa9
+
+### デザイナーとしてロールプレイさせる
+
+https://github.com/user-attachments/assets/91ded8fb-b372-4020-a326-788c38670edc
+
 ## インストール方法
 
 ### Dockerを使用する場合
