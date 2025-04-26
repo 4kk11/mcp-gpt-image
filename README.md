@@ -3,48 +3,48 @@
 [![npm version](https://badge.fury.io/js/mcp-gpt-image.svg)](https://www.npmjs.com/package/mcp-gpt-image)
 [![Docker Image](https://img.shields.io/docker/v/4kk11/mcp-gpt-image?logo=docker)](https://hub.docker.com/r/4kk11/mcp-gpt-image)
 
-OpenAI APIを使用して画像を生成・編集するためのMCPサーバーです。  
-生成された画像は指定されたディレクトリに保存され、プレビュー用に縮小された画像と合わせて返却されます。
+An MCP server for generating and editing images using the OpenAI API.  
+Generated images are saved in the specified directory and returned along with scaled-down preview images.
 
-## 主な機能
+## Key Features
 
-### 1. 画像生成 (generate_image)
-テキストプロンプトから新しい画像を生成します。
+### 1. Image Generation (generate_image)
+Generates new images from text prompts.
 
-**入力パラメータ:**
-- `prompt`: 生成したい画像の説明（必須）
-- `size`: 出力画像サイズ（オプション、デフォルト："auto"）
+**Input Parameters:**
+- `prompt`: Description of the image you want to generate (required)
+- `size`: Output image size (optional, default: "auto")
   - "1024x1024"
   - "1536x1024"
   - "1024x1536"
   - "auto"
 
-### 2. 画像編集 (edit_image)
-既存の画像をテキストプロンプトに基づいて編集します。
+### 2. Image Editing (edit_image)
+Edits existing images based on text prompts.
 
-**入力パラメータ:**
-- `image`: 編集する画像のファイルパス（必須）
-- `prompt`: 編集内容を説明するテキストプロンプト（必須）
+**Input Parameters:**
+- `image`: File path of the image to edit (required)
+- `prompt`: Text prompt describing the desired edits (required)
 
-## 使用例
-### バリエーションを出力
+## Usage Examples
+### Generating Variations
 
 https://github.com/user-attachments/assets/c0f69b09-237f-4cc4-96cc-f528d36b1fa9
 
-### デザイナーとしてロールプレイさせる
+### Role-playing as a Designer
 
 https://github.com/user-attachments/assets/91ded8fb-b372-4020-a326-788c38670edc
 
-## インストール方法
+## Installation
 
-### Dockerを使用する場合
+### Using Docker
 
-1. Dockerイメージをプル
+1. Pull the Docker image
 ```bash
 docker pull 4kk11/mcp-gpt-image
 ```
 
-2. 設定例（claude_desktop_config.json）
+2. Configuration example (claude_desktop_config.json)
 ```json
 {
   "mcpServers": {
@@ -65,9 +65,9 @@ docker pull 4kk11/mcp-gpt-image
 }
 ```
 
-### npxを使用する場合
+### Using npx
 
-設定例（claude_desktop_config.json）:
+Configuration example (claude_desktop_config.json):
 ```json
 {
   "mcpServers": {
@@ -86,22 +86,22 @@ docker pull 4kk11/mcp-gpt-image
 }
 ```
 
-## 環境変数
+## Environment Variables
 
-| 変数名 | 説明 | デフォルト値 |
-|--------|------|--------------|
-| OPENAI_API_KEY | OpenAI APIキー（必須） | - |
-| IMAGES_DIR | 生成・編集した画像を保存するディレクトリのパス | ./temp |
+| Variable Name | Description | Default Value |
+|--------------|-------------|---------------|
+| OPENAI_API_KEY | OpenAI API key (required) | - |
+| IMAGES_DIR | Path to directory for saving generated/edited images | ./temp |
 
-## 開発者向け
+## For Developers
 
-### Dockerイメージのビルドと管理
+### Building and Managing Docker Images
 
 ```bash
-# Dockerイメージをビルド
+# Build Docker image
 make docker-build
 
-# Dockerイメージを削除
+# Remove Docker image
 make docker-clean
 ```
 
@@ -128,6 +128,6 @@ make docker-clean
 }
 ```
 
-## ライセンス
+## License
 
-このプロジェクトはMITライセンスの下で公開されています。詳細は[LICENSE](LICENSE)ファイルをご覧ください。
+This project is released under the MIT License. See [LICENSE](LICENSE) file for details.
